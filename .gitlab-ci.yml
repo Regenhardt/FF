@@ -1,0 +1,17 @@
+stages:
+  - test
+
+run_tests:
+  stage: test
+  image: ubuntu:latest
+  before_script: 
+    - apt-get update && apt-get -y install wget
+    - wget https://dot.net/v1/dotnet-install.sh
+    - bash ./dotnet-install.sh -c 6.0
+    - export PATH="$PATH:$HOME/.dotnet"
+    - DEBIAN_FRONTEND=noninteractive apt-get -y install nuget
+  script: 
+    - nuget install nunit.consolerunner
+    - dotnet restore
+    - dotnet build --configuration Release --no-restore
+    - dotnet test --no-restore --verbosity normal

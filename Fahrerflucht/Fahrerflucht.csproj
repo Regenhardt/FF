@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Fahrerflucht</AssemblyName>
+        <RootNamespace>Fahrerflucht</RootNamespace>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mars.Components" Version="4.3.0-beta-4" />
+        <PackageReference Include="Mars.Core" Version="4.3.0-beta-4" />
+        <PackageReference Include="ImGui.NET" Version="1.78.0" />
+        <PackageReference Include="Raylib-cs" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="run.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\NeuralNetwork\NeuralNetwork.csproj" />
+      <ProjectReference Include="..\Utils\Utils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Tests" />
+    </ItemGroup>
+</Project>

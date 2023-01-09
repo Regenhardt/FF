@@ -1,0 +1,51 @@
+{
+  "MapFile": "Resources/track1.geojson",
+  "MapBG": "Resources/track1.png",
+  "CheckPointFile": "Resources/checkpoints1.json",
+  "Groups": [
+    {
+      "Name": "Devs-1",
+      "Color": [ 40, 240, 40 ],
+      "StartPosition": [ 150, 40 ],
+      "AgentCount": 100,
+      "MinKeepThreshold": 20,
+      "ThresholdFitness": 20,
+      "BestPerformerKeepRate": 0.1,
+      "RandomSeed": 585585,
+      "HiddenLayerCount": 1,
+      "HiddenNeuronCount": 2,
+      "Sensors": [
+        {
+          "Angle": 10,
+          "Range": 10
+        },
+        {
+          "Angle": -10,
+          "Range": 10
+        }
+      ]
+    },
+    {
+      "Name": "Devs-2",
+      "Color": [ 250, 40, 40 ],
+      "StartPosition": [ 630, 40 ],
+      "AgentCount": 100,
+      "MinKeepThreshold": 20,
+      "ThresholdFitness": 20,
+      "BestPerformerKeepRate": 0.1,
+      "RandomSeed": 123515,
+      "HiddenLayerCount": 1,
+      "HiddenNeuronCount": 2,
+      "Sensors": [
+        {
+          "Angle": 10,
+          "Range": 10
+        },
+        {
+          "Angle": -10,
+          "Range": 10
+        }
+      ]
+    }
+  ]
+}
