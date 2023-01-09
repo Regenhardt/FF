@@ -5,7 +5,7 @@ using Utils;
 namespace NeuralNetwork.EvolutionaryAlgorithm
 {
     /// <summary>
-    /// Implements a genome representation that encapsulates a fully connect neural network (<see cref="FCNeuralNetwork" />) combined with a tracked fitness.
+    /// Implements a genome representation that encapsulates a fully connect neural network (<see cref="FCNeuralNetwork" />) combined with a tracked fitness (<see cref="Fitness" />).
     /// </summary>
     public class Genome
     {
@@ -29,7 +29,6 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
 
             LayerUtils.PopulateLayerRandomly(_fcNeuralNetwork.OutputLayer, random);
         }
-
         /// <summary>
         /// Initializes a deep copy of the given genomes neural network while initializing the fitness with zero.
         /// </summary>
@@ -37,9 +36,8 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
         public Genome(Genome copy)
         {
             Fitness = 0.0;
-            _fcNeuralNetwork = new FCNeuralNetwork(copy._fcNeuralNetwork);
+            _fcNeuralNetwork = copy._fcNeuralNetwork.Clone();
         }
-
         /// <summary>
         /// Randomly inherits (changes) the biases and weights with the ones from the given genome.
         /// </summary>
@@ -55,10 +53,8 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
             }
 
             LayerUtils.InheritLayerBiasAndWeightsRandomly(_fcNeuralNetwork.OutputLayer, otherGenome._fcNeuralNetwork.OutputLayer, random);
-
             return this;
         }
-
         /// <summary>
         /// Mutates biases and weights randomly with random values.
         /// </summary>
@@ -72,10 +68,8 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
             }
 
             LayerUtils.MutateLayerRandomly(_fcNeuralNetwork.OutputLayer, random);
-
             return this;
         }
-
         /// <summary>
         /// Processes an input through the internal neural network.
         /// </summary>
@@ -119,7 +113,6 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
             }
             return outputs;
         }
-
         /// <summary>
         /// Genome / neural network fitness.
         /// </summary>

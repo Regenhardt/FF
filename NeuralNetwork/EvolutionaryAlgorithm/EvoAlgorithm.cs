@@ -30,9 +30,8 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
                 _genomes.Add(new Genome(inputCount, hiddenNeuronCount, outputCount, hiddenLayerCount, _random));
             }
         }
-
         /// <summary>
-        /// Allows access to the specified <see cref="NeuralNetwork.EvolutionaryAlgorithm.Genome" />.
+        /// Allows access to the specified <see cref="Genome" />.
         /// </summary>
         /// <param name="id">The genome identifier (Range: [0 - (genomeCount - 1)])</param>
         /// <returns>Genome with the given id</returns>
@@ -41,7 +40,6 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
         {
             return _genomes[id];
         }
-
         /// <summary>
         /// Repopulates the entire genomes with the given parameters and randomness.
         /// Preferences regarding which genomes according to their fitness rating must be kept and which should be preferred or excluded can be controlled via the parameter. 

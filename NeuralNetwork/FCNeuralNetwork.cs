@@ -1,43 +1,60 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace NeuralNetwork
 {
     /// <summary>
-    /// 
+    /// Implements a fully connected neural network structure.
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class FCNeuralNetwork
     {
-        public static FCNeuralNetwork Deserialize(string objJSON)
+        #region JSON Serialization / Deserialization 
+        /// <summary>
+        /// Creates an instance of the supplied JSON representation.
+        /// </summary>
+        /// <param name="objJson">JSON Instance representation</param>
+        /// <returns>Reconstructed instance</returns>
+        public static FCNeuralNetwork Deserialize(string objJson)
         {
-            FCNeuralNetwork fcNeuralNetwork = JsonConvert.DeserializeObject<FCNeuralNetwork>(objJSON);
+            var fcNeuralNetwork = JsonConvert.DeserializeObject<FCNeuralNetwork>(objJson);
+            var firstHiddenLayer = fcNeuralNetwork.HiddenLayer.First();
+            var prevLayer = fcNeuralNetwork.HiddenLayer.Last();
 
-            // TODO: Make it support multiple hidden layer
-            foreach (var neuron in fcNeuralNetwork.OutputLayer.NeuronList)
+            foreach (var dendrite in fcNeuralNetwork.OutputLayer.NeuronList.SelectMany(neuron => neuron.ConnectedNeurons))
             {
-                foreach (var dendrite in neuron.ConnectedNeurons)
+                dendrite.ConnectedLayer = prevLayer;
+            }
+
+            for (var i = fcNeuralNetwork.HiddenLayer.Count - 1; i > 0; i--)
+            {
+                foreach (var dendrite in fcNeuralNetwork.HiddenLayer[i].NeuronList.SelectMany(neuron => neuron.ConnectedNeurons))
                 {
-                    dendrite.ConnectedLayer = fcNeuralNetwork.HiddenLayer[0];
+                    dendrite.ConnectedLayer = fcNeuralNetwork.HiddenLayer[i-1];
                 }
             }
 
-            // adjust this too
-            foreach (var neuron in fcNeuralNetwork.HiddenLayer[0].NeuronList)
+            foreach (var dendrite in firstHiddenLayer.NeuronList.SelectMany(neuron => neuron.ConnectedNeurons))
             {
-                foreach (var dendrite in neuron.ConnectedNeurons)
-                {
-                    dendrite.ConnectedLayer = fcNeuralNetwork.InputLayer;
-                }
+                dendrite.ConnectedLayer = fcNeuralNetwork.InputLayer;
             }
 
             return fcNeuralNetwork;
         }
-
+        /// <summary>
+        /// Serializes the given instance into a json representation string.
+        /// </summary>
+        /// <param name="fcNeuralNetwork">Instance to be serialized</param>
+        /// <returns>JSON Object representation as a string</returns>
         public static string Serialize(FCNeuralNetwork fcNeuralNetwork)
         {
             return JsonConvert.SerializeObject(fcNeuralNetwork);
         }
-
+        /// <summary>
+        /// Hollow direct member assign constructor for json deserialization.
+        /// </summary>
         [JsonConstructor]
         protected FCNeuralNetwork(string name, Layer inputLayer, List<Layer> hiddenLayer, Layer outputLayer)
         {
@@ -46,46 +63,68 @@ namespace NeuralNetwork
             HiddenLayer = hiddenLayer;
             OutputLayer = outputLayer;
         }
-
+        #endregion
+        /// <summary>
+        /// Initializes a new instance of a fully connected neural network with the given properties.
+        /// </summary>
+        /// <param name="inputNeuronCount">Sets the amount of input neurons / values</param>
+        /// <param name="hiddenNeuronCount">Sets the amount of hidden neurons</param>
+        /// <param name="outputNeuronCount">Sets the amount of output neurons / values</param>
+        /// <param name="hiddenLayerCount">Sets the amount of hidden layers</param>
+        /// <exception cref="Exception"></exception>
         public FCNeuralNetwork(int inputNeuronCount, int hiddenNeuronCount, int outputNeuronCount, int hiddenLayerCount = 1)
         {
             if (hiddenLayerCount < 1)
             {
-                throw new System.Exception("Neural net cannot have 0 hidden layers!");
+                throw new Exception("Can not have 0 hidden layers!");
             }
 
             // Construct fully connected NN backwards for connections
-            OutputLayer = new Layer(outputNeuronCount, null);
-            OutputLayer.Name = "Output";
-            Layer prevLayer = OutputLayer;
-            HiddenLayer = new List<Layer>();
-            for (int i = hiddenLayerCount; i != 0; i--)
+            OutputLayer = new Layer(outputNeuronCount, null)
             {
-                Layer newHiddenLayer = new Layer(hiddenNeuronCount, prevLayer);
-                newHiddenLayer.Name = "Hidden-" + i.ToString();
-                HiddenLayer.Add(newHiddenLayer);
+                Name = "Output"
+            };
+
+            var prevLayer = OutputLayer;
+            HiddenLayer = new List<Layer>();
+            for (var i = hiddenLayerCount; i != 0; i--)
+            {
+                var newHiddenLayer = new Layer(hiddenNeuronCount, prevLayer)
+                {
+                    Name = "Hidden-" + i
+                };
+                HiddenLayer.Insert(0, newHiddenLayer);
                 prevLayer = newHiddenLayer;
             }
-            InputLayer = new Layer(inputNeuronCount, prevLayer);
-            InputLayer.Name = "Input";
-        }
 
-        public FCNeuralNetwork(FCNeuralNetwork copy)
+            InputLayer = new Layer(inputNeuronCount, prevLayer)
+            {
+                Name = "Input"
+            };
+        }
+        /// <summary>
+        /// Creates a deep copy of the given neural network.
+        /// </summary>
+        public FCNeuralNetwork Clone()
         {
             // TODO: Dirty solution for the moment
-            var dirtycopy = Deserialize(Serialize(copy));
-            Name = dirtycopy.Name;
-            InputLayer = dirtycopy.InputLayer;
-            HiddenLayer = dirtycopy.HiddenLayer;
-            OutputLayer = dirtycopy.OutputLayer;
+            return Deserialize(Serialize(this));
         }
-
-        public string Name { get; set; }
-
-        public Layer InputLayer { get; set; }
-
-        public List<Layer> HiddenLayer { get; set; }
-
-        public Layer OutputLayer { get; set; }
+        /// <summary>
+        /// An optional name attribute to make it easier to debug and prettier for export and import.
+        /// </summary>
+        public string Name;
+        /// <summary>
+        /// The input layer of the neural network.
+        /// </summary>
+        public Layer InputLayer;
+        /// <summary>
+        /// The hidden layers of the neural network.
+        /// </summary>
+        public List<Layer> HiddenLayer;
+        /// <summary>
+        /// The output layer of the neural network.
+        /// </summary>
+        public Layer OutputLayer;
     }
 }
