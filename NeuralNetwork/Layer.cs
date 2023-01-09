@@ -5,7 +5,7 @@ namespace NeuralNetwork
     /// <summary>
     /// Implements a layer representation in a neural network structure that contains multiple <see cref="Neuron" />s which get identified by their local index.
     /// </summary>
-    public class Layer
+    internal class Layer
     {
         /// <summary>
         /// Initializes a new instance of a fully connected layer with zero initialized <see cref="Neuron" />s which get all connected with <see cref="Dendrite" />s to a <see cref="Layer" /> behind it if supplied.

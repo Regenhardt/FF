@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace NeuralNetwork
 {
     /// <summary>
     /// Implements a fully connected neural network structure.
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public class FCNeuralNetwork
+    internal class FCNeuralNetwork
     {
         #region JSON Serialization / Deserialization 
         /// <summary>
@@ -107,7 +109,7 @@ namespace NeuralNetwork
         /// </summary>
         public FCNeuralNetwork Clone()
         {
-            // TODO: Dirty solution for the moment
+            // TODO: Dirty solution for the moment (time restraints)
             return Deserialize(Serialize(this));
         }
         /// <summary>

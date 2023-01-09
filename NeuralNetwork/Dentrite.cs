@@ -6,7 +6,7 @@ namespace NeuralNetwork
     /// Implements a dendrite representation in a neural network structure that connects 2 <see cref="NeuralNetwork.Neuron" />s together.
     /// </summary>
     /// <remarks>A dendrite always connects a <see cref="NeuralNetwork.Neuron" />s from 1 <see cref="Layer" /> to a previous <see cref="Layer" />.</remarks>
-    public class Dendrite
+    internal class Dendrite
     {
         /// <summary>
         /// Initializes a new instance of a dendrite with an initial <see cref="Weight" /> of zero that connects two <see cref="NeuralNetwork.Neuron" />s from two different <see cref="Layer" />s.
