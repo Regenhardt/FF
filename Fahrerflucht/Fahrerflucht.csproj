@@ -5,6 +5,7 @@
         <AssemblyName>Fahrerflucht</AssemblyName>
         <RootNamespace>Fahrerflucht</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 

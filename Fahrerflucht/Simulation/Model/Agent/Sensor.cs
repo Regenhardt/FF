@@ -14,9 +14,11 @@ namespace Fahrerflucht.Simulation.Model.Agent
 
         public SensorDataDTO GetData()
         {
-            SensorDataDTO data = new SensorDataDTO();
-            data.LastSensorRead = _lastRead;
-            data.SensorVec = _lastVec;
+            var data = new SensorDataDTO
+            {
+                LastSensorRead = _lastRead,
+                SensorVec = _lastVec
+            };
             return data;
         }
 

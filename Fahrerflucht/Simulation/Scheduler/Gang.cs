@@ -4,6 +4,7 @@ using NeuralNetwork.EvolutionaryAlgorithm;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Utils;
 
@@ -17,6 +18,9 @@ namespace Fahrerflucht.Simulation.Scheduler
             _algorithm = new EvoAlgorithm(group.AgentCount, group.Sensors.Count, 2, group.HiddenLayerCount, group.HiddenNeuronCount, group.RandomSeed);
             _group = group;
             _iterationEnd = false;
+            FitnessData = new List<List<double>>();
+            BestGenomes = new List<Genome>();
+            Name = group.Name;
         }
 
         public int GetAgentCount()
@@ -101,14 +105,21 @@ namespace Fahrerflucht.Simulation.Scheduler
 
         private void agentSyncEvent()
         {
+            var fitnessCol = new List<double>();
+            Genome bestGenome = null;
+            double bestFitness = double.MinValue;
             foreach (var agent in _players)
             {
-                double distance = agent.CalculateCPsDistance();
-                agent.getGenome().Fitness = distance;
-                // var snap = agent.GetAgentSnapshot();
-                //Console.WriteLine("Agent: " + distance);//string.Join("", agent._passedCPs));
-
+                agent.GetGenome().Fitness = agent.CalculateCPsDistance();
+                if (agent.GetGenome().Fitness > bestFitness)
+                {
+                    bestFitness = agent.GetGenome().Fitness;
+                    bestGenome = agent.GetGenome();
+                }
+                fitnessCol.Add(agent.GetGenome().Fitness);
             }
+            FitnessData.Add(fitnessCol.OrderBy(g => -g).ToList());
+            BestGenomes.Add(bestGenome);
             _algorithm.Evolution(_group.BestPerformerKeepRate, _group.ThresholdFitness, _group.MinKeepThreshold);
         }
 
@@ -116,5 +127,8 @@ namespace Fahrerflucht.Simulation.Scheduler
         private List<Player> _players;
         private EvoAlgorithm _algorithm;
         private SimulationGroup _group;
+        public List<List<double>> FitnessData;
+        public List<Genome> BestGenomes;
+        public string Name;
     }
 }

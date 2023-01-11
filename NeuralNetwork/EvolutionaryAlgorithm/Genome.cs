@@ -39,6 +39,14 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
             _fcNeuralNetwork = copy._fcNeuralNetwork.Clone();
         }
         /// <summary>
+        /// Serializes the internal neural network (<see cref="FCNeuralNetwork" />) into a json string.
+        /// </summary>
+        /// <returns>Serialized neural network as a json representation</returns>
+        public string ExportNeuralNetwork()
+        {
+            return FCNeuralNetwork.Serialize(_fcNeuralNetwork);
+        }
+        /// <summary>
         /// Randomly inherits (changes) the biases and weights with the ones from the given genome.
         /// </summary>
         /// <param name="otherGenome">Bias and weight genome source</param>

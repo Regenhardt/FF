@@ -66,6 +66,6 @@ namespace Fahrerflucht.Simulation.Scheduler
         }
 
         private int _curFilledGang;
-        private List<Gang> _gangs;
+        public List<Gang> _gangs;
     }
 }

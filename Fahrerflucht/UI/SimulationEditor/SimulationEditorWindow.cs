@@ -14,7 +14,7 @@ namespace Fahrerflucht.UI.SimulationEditor
         {
             // Simulation preview
             _simPreview = simPreview;
-            _simulationVP = new SimulationVPDTO { Zoom = 1.75f, XOffset = 515, YOffset = 412, RenderCheckPoints = false, RenderCarImages = true, RenderDeadAgents = false, RenderSensors = false, BackgroundColor = ThemeConstants.DarkThemeBG, RenderMapBG = true};
+            _simulationVP = new SimulationVPDTO { Zoom = 1.75f, XOffset = 515, YOffset = 412, RenderCheckPoints = false, RenderCarImages = true, RenderDeadAgents = false, RenderSensors = false, BackgroundColor = ThemeConstants.DarkThemeBg, RenderMapBG = true};
             _simPreview.ChangeViewSettings(_simulationVP);
 
             // Simulation settings
@@ -60,13 +60,13 @@ namespace Fahrerflucht.UI.SimulationEditor
                         if (_isDarkThemed)
                         {
                             ImGui.StyleColorsLight();
-                            _simulationVP.BackgroundColor = ThemeConstants.WhiteThemeBG;
+                            _simulationVP.BackgroundColor = ThemeConstants.WhiteThemeBg;
                             _isDarkThemed = false;
                         }
                         else
                         {
                             ImGui.StyleColorsDark();
-                            _simulationVP.BackgroundColor = ThemeConstants.DarkThemeBG;
+                            _simulationVP.BackgroundColor = ThemeConstants.DarkThemeBg;
                             _isDarkThemed = true;
                         }
                     }

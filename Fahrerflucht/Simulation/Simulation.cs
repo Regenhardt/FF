@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Mars.Components.Starter;
@@ -7,6 +9,7 @@ using Mars.Interfaces.Model;
 using Fahrerflucht.Simulation.Model;
 using Fahrerflucht.Simulation.Model.Agent;
 using Fahrerflucht.Simulation.Scheduler;
+using NeuralNetwork.EvolutionaryAlgorithm;
 using Utils;
 using static Utils.GeoJson;
 using static Fahrerflucht.Simulation.Scheduler.GangScheduler;
@@ -64,17 +67,54 @@ namespace Fahrerflucht.Simulation
                 SetCurrentSimulation(this);
                 // Start Mars Simulation
                 Console.WriteLine("Started simulation");
-                ModelDescription description = new ModelDescription();
+                var description = new ModelDescription();
                 description.AddLayer<GameLayer>();
                 description.AddAgent<Player, GameLayer>();
-                SimulationConfig config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 1000000,\"console\": false,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
-                SimulationStarter starter = SimulationStarter.Start(description, config);
+                var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 1000,\"console\": false,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
+                var starter = SimulationStarter.Start(description, config);
                 starter.Run();
                 starter.Dispose();
+                exportData();
                 Console.WriteLine("Simulation ended");
                 // Free Singleton
                 SetCurrentSimulation(null);
             });
+        }
+
+        private void exportData()
+        {
+            var outputPath = "output/" + Path.GetFileNameWithoutExtension(_runInstance.Config.MapFile) +  "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + "/";
+            Directory.CreateDirectory(outputPath);
+            foreach (var gang in _gangScheduler._gangs)
+            {
+                exportTeam(outputPath, gang);
+            }
+        }
+
+        private void exportTeam(string basePath, Gang gang)
+        {
+            var teamPath = basePath + gang.Name + "/";
+            Directory.CreateDirectory(teamPath);
+            {
+                using StreamWriter writer = new StreamWriter(teamPath + "/fitnessdata.csv");
+                // Fitness Data
+                foreach (var fitness in gang.FitnessData)
+                {
+                    writer.WriteLine(fitness[0]);
+                }
+            }
+            {
+                // Genome Data
+                int i = 0;
+                foreach (var genome in gang.BestGenomes)
+                {
+                    using StreamWriter genomeWriter = new StreamWriter(teamPath + "/genome"+ (i++) + ".json");
+                    genomeWriter.Write(genome.ExportNeuralNetwork());
+                }
+            }
+            // gang.FitnessData;
+            // gang.BestGenomes;
+
         }
 
         public List<List<int>> GetCheckPoints()
@@ -87,8 +127,8 @@ namespace Fahrerflucht.Simulation
             return _runInstance.Track;
         }
 
-        private RunInstance _runInstance;
-        private GangScheduler _gangScheduler;
+        private readonly RunInstance _runInstance;
+        private readonly GangScheduler _gangScheduler;
         private static Simulation Singleton = null;
     }
 }

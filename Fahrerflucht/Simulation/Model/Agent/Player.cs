@@ -122,7 +122,7 @@ namespace Fahrerflucht.Simulation.Model.Agent
                 }
             }
 
-            Genome myGenome = getGenome();
+            Genome myGenome = GetGenome();
              _movingVec = GetMovingDir(myGenome.Process(GetSensorData()));
             
             Vector2 newPos = new Vector2((float)Position.X + _movingVec.X, (float)Position.Y + _movingVec.Y);
@@ -139,7 +139,7 @@ namespace Fahrerflucht.Simulation.Model.Agent
                 Position.Y = newPos.Y;
             }
         }
-        public Genome getGenome()
+        public Genome GetGenome()
         {
             return _member.BoundGang.GetMemberGenome(_member.ID);
         }
