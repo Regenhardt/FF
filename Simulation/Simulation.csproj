@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Mars.Components" Version="4.3.0-beta-4" />
+      <PackageReference Include="Mars.Core" Version="4.3.0-beta-4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NeuralNetwork\NeuralNetwork.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+
+</Project>

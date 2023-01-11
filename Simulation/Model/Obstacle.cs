@@ -1,7 +1,7 @@
 ﻿using System;
 using Mars.Components.Environments.Cartesian;
 
-namespace Fahrerflucht.Simulation.Model
+namespace Simulation.Model
 {
     public class Obstacle : IObstacle
     {

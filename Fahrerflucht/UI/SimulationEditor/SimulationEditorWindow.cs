@@ -1,4 +1,4 @@
-﻿using Fahrerflucht.Simulation;
+﻿using Simulation;
 using Fahrerflucht.UI.IMGUI;
 using Fahrerflucht.UI.SimulationPreview;
 using ImGuiNET;

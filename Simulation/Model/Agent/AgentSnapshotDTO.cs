@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Fahrerflucht.Simulation.Model.Agent
+namespace Simulation.Model.Agent
 {
     public class SensorDataDTO
     {

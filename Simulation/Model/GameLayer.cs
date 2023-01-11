@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Fahrerflucht.Simulation.Model.Agent;
+using Simulation.Model.Agent;
 using Mars.Components.Environments.Cartesian;
 using Mars.Components.Environments.Cartesian.Routing;
 using Mars.Components.Layers;
@@ -11,7 +11,7 @@ using Mars.Interfaces.Layers;
 using NetTopologySuite.Geometries;
 using Utils;
 
-namespace Fahrerflucht.Simulation.Model
+namespace Simulation.Model
 {
     public class GameLayer : AbstractLayer
     {

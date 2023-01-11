@@ -10,8 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mars.Components" Version="4.3.0-beta-4" />
-        <PackageReference Include="Mars.Core" Version="4.3.0-beta-4" />
         <PackageReference Include="ImGui.NET" Version="1.78.0" />
         <PackageReference Include="Raylib-cs" Version="4.0.0" />
     </ItemGroup>
@@ -27,6 +25,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\NeuralNetwork\NeuralNetwork.csproj" />
+      <ProjectReference Include="..\Simulation\Simulation.csproj" />
       <ProjectReference Include="..\Utils\Utils.csproj" />
     </ItemGroup>
 

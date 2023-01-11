@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Mars.Components.Starter;
 using Mars.Interfaces.Model;
-using Fahrerflucht.Simulation.Model;
-using Fahrerflucht.Simulation.Model.Agent;
-using Fahrerflucht.Simulation.Scheduler;
+using Simulation.Model;
+using Simulation.Model.Agent;
+using Simulation.Scheduler;
 using Utils;
 using static Utils.GeoJson;
-using static Fahrerflucht.Simulation.Scheduler.GangScheduler;
+using static Simulation.Scheduler.GangScheduler;
 
-namespace Fahrerflucht.Simulation
+namespace Simulation
 {
     public class Simulation
     {
-        internal Simulation(RunInstance runInstance)
+        public Simulation(RunInstance runInstance)
         {
             // Set run config / instance and assign gang scheduler
             _runInstance = runInstance;

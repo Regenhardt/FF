@@ -1,4 +1,4 @@
-﻿using Fahrerflucht.Simulation.Model.Agent;
+﻿using Simulation.Model.Agent;
 using Mars.Interfaces.Environments;
 using NeuralNetwork.EvolutionaryAlgorithm;
 using Raylib_cs;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Utils;
 
-namespace Fahrerflucht.Simulation.Scheduler
+namespace Simulation.Scheduler
 {
     public class Gang
     {

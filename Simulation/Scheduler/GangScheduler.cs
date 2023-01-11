@@ -1,4 +1,4 @@
-﻿using Fahrerflucht.Simulation.Model.Agent;
+﻿using Simulation.Model.Agent;
 using NeuralNetwork.EvolutionaryAlgorithm;
 using Raylib_cs;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Utils;
 
-namespace Fahrerflucht.Simulation.Scheduler
+namespace Simulation.Scheduler
 {
     public class GangScheduler
     {

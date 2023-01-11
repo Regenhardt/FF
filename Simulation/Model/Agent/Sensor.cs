@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Position = Mars.Interfaces.Environments.Position;
 
-namespace Fahrerflucht.Simulation.Model.Agent
+namespace Simulation.Model.Agent
 {
     internal class Sensor
     {

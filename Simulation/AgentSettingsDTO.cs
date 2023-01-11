@@ -1,4 +1,4 @@
-﻿namespace Fahrerflucht.Simulation
+﻿namespace Simulation
 {
     public class AgentSettingsDTO
     {

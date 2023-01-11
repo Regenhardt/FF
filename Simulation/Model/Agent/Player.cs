@@ -6,10 +6,10 @@ using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
 using NeuralNetwork.EvolutionaryAlgorithm;
 using Utils;
-using static Fahrerflucht.Simulation.Scheduler.GangScheduler;
+using static Simulation.Scheduler.GangScheduler;
 using Position = Mars.Interfaces.Environments.Position;
 
-namespace Fahrerflucht.Simulation.Model.Agent
+namespace Simulation.Model.Agent
 {
     public class Player : ICharacter, IAgent<GameLayer>
     {

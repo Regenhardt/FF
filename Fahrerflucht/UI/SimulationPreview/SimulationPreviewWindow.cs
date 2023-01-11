@@ -1,5 +1,5 @@
-﻿using Fahrerflucht.Simulation;
-using Fahrerflucht.Simulation.Model.Agent;
+﻿using Simulation;
+using Simulation.Model.Agent;
 using Fahrerflucht.UI.IMGUI;
 using ImGuiNET;
 using Raylib_cs;
