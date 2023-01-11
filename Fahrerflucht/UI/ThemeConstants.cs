@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-namespace Utils
+namespace Fahrerflucht.UI
 {
     public class ThemeConstants
     {
