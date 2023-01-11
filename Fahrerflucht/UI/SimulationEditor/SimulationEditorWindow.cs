@@ -88,7 +88,7 @@ namespace Fahrerflucht.UI.SimulationEditor
                         {
                             System.Console.WriteLine("Starting simulation");
                             _curSimulation = new Simulation.Simulation(_runInstance);
-                            _curSimulation.Start();
+                            _curSimulation.StartDetached();
                             _simPreview._curSimulation = _curSimulation;
                         }
                         else

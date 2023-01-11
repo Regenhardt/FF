@@ -30,13 +30,14 @@ namespace Fahrerflucht
             if (args.Length == 2 && !Convert.ToBoolean(args[1])/*Visible*/)
             {
                 // Simulation run without UI
+                new Simulation.Simulation(runInstance).Start();
             }
             else
             {
                 // Simulation with UI
                 Raylib.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
                 Raylib.InitWindow(1600, 900, "Fahrerflucht");
-                rlImGui.Setup(true);
+                rlImGui.Setup();
 
                 var windowStack = new Stack<WindowBase>();
                 var preview = new SimulationPreviewWindow(runInstance);

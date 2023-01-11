@@ -9,7 +9,6 @@ using Mars.Interfaces.Model;
 using Fahrerflucht.Simulation.Model;
 using Fahrerflucht.Simulation.Model.Agent;
 using Fahrerflucht.Simulation.Scheduler;
-using NeuralNetwork.EvolutionaryAlgorithm;
 using Utils;
 using static Utils.GeoJson;
 using static Fahrerflucht.Simulation.Scheduler.GangScheduler;
@@ -59,26 +58,28 @@ namespace Fahrerflucht.Simulation
             return _gangScheduler.GetAgentSnapshots();
         }
 
+        public void StartDetached()
+        {
+            Task.Run(Start);
+        }
+
         public void Start()
         {
-            Task.Run(() =>
-            {
-                // Set current simulation as the one being globally executed (Singleton)
-                SetCurrentSimulation(this);
-                // Start Mars Simulation
-                Console.WriteLine("Started simulation");
-                var description = new ModelDescription();
-                description.AddLayer<GameLayer>();
-                description.AddAgent<Player, GameLayer>();
-                var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 1000,\"console\": false,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
-                var starter = SimulationStarter.Start(description, config);
-                starter.Run();
-                starter.Dispose();
-                exportData();
-                Console.WriteLine("Simulation ended");
-                // Free Singleton
-                SetCurrentSimulation(null);
-            });
+            // Set current simulation as the one being globally executed (Singleton)
+            SetCurrentSimulation(this);
+            // Start Mars Simulation
+            Console.WriteLine("Started simulation");
+            var description = new ModelDescription();
+            description.AddLayer<GameLayer>();
+            description.AddAgent<Player, GameLayer>();
+            var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 1000,\"console\": true,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
+            var starter = SimulationStarter.Start(description, config);
+            starter.Run();
+            starter.Dispose();
+            exportData();
+            Console.WriteLine("Simulation ended");
+            // Free Singleton
+            SetCurrentSimulation(null);
         }
 
         private void exportData()

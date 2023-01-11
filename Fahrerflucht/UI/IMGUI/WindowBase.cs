@@ -13,7 +13,5 @@ namespace Fahrerflucht.UI.IMGUI
         protected RenderTexture2D _viewTexture;
         public virtual void Show() { if (Open) { Show(FirstOpen); FirstOpen = false; } }
         public virtual void Show(bool firstOpen) { }
-        public virtual void Shutdown() { }
-        public virtual void Update() { }
     }
 }

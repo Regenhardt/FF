@@ -27,7 +27,7 @@ namespace Fahrerflucht.UI.SimulationPreview
             }
         }
 
-        public override void Shutdown()
+        public virtual void Shutdown()
         {
             Raylib.UnloadRenderTexture(_viewTexture);
             Raylib.UnloadTexture(_carTexture);
@@ -159,7 +159,7 @@ namespace Fahrerflucht.UI.SimulationPreview
             Raylib.DrawText("Agent Spawn", (int)_agentSpawn.X + (int)(10 * 1.4f), (int)_agentSpawn.Y - 7, 14, ThemeConstants.AgentSpawn);
         }
         
-        public override void Update()
+        public virtual void Update()
         {
             Raylib.BeginTextureMode(_viewTexture);
             Raylib.ClearBackground(_settings.BackgroundColor);
