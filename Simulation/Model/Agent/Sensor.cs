@@ -22,9 +22,9 @@ namespace Simulation.Model.Agent
             return data;
         }
 
-        public double ReadSensor(Position Position, Vector2 dir, GameLayer layer)
+        public double ReadSensor(Position position, Vector2 dir, GameLayer layer)
         {
-            Vector2 vec = new Vector2((float)Position.X, (float)Position.Y);
+            var vec = new Vector2((float)position.X, (float)position.Y);
             _lastVec = -1 * Utils.MathUtils.RotateVec(dir, _angle) * (float)_radius;
             _lastRead = 0.0;
 

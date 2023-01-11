@@ -27,19 +27,19 @@ namespace Fahrerflucht.UI.SimulationPreview
             }
         }
 
-        public virtual void Shutdown()
+        public override void Shutdown()
         {
             Raylib.UnloadRenderTexture(_viewTexture);
             Raylib.UnloadTexture(_carTexture);
         }
 
-        public void ChangeViewSettings(SimulationVPDTO simulationVPDTO)
+        public void ChangeViewSettings(SimulationVpDto simulationVpDto)
         {
             _camera.target = new Vector2(_viewTexture.texture.width / 2.0f, _viewTexture.texture.height / 2.0f);
-            _camera.offset = new Vector2(_viewTexture.texture.width / 2.0f + simulationVPDTO.XOffset, _viewTexture.texture.height / 2.0f + simulationVPDTO.YOffset);
-            _camera.zoom = simulationVPDTO.Zoom;
+            _camera.offset = new Vector2(_viewTexture.texture.width / 2.0f + simulationVpDto.XOffset, _viewTexture.texture.height / 2.0f + simulationVpDto.YOffset);
+            _camera.zoom = simulationVpDto.Zoom;
             _camera.rotation = 0.0f;
-            _settings = simulationVPDTO;
+            _settings = simulationVpDto;
         }
 
         public void ChangeAgentSettings(AgentSettingsDTO agentSettings)
@@ -85,7 +85,7 @@ namespace Fahrerflucht.UI.SimulationPreview
 
         private void RenderTrack()
         {
-            if (_settings.RenderMapBG && _trackTexture.width != 0 && _trackTexture.height != 0)
+            if (_settings.RenderMapBg && _trackTexture.width != 0 && _trackTexture.height != 0)
             {
                Raylib.DrawTexture(_trackTexture, 0, 0, Color.RAYWHITE);
             } 
@@ -189,7 +189,7 @@ namespace Fahrerflucht.UI.SimulationPreview
 
         // View settings
         private Camera2D _camera;
-        private SimulationVPDTO _settings;
+        private SimulationVpDto _settings;
 
         // Render textures
         private Texture2D _carTexture;

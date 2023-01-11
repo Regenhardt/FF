@@ -2,7 +2,7 @@
 
 namespace Fahrerflucht.UI.SimulationPreview
 {
-    internal class SimulationVPDTO
+    internal class SimulationVpDto
     {
         public float    Zoom;
         public int      XOffset;
@@ -11,7 +11,7 @@ namespace Fahrerflucht.UI.SimulationPreview
         public bool     RenderCarImages;
         public bool     RenderSensors;
         public bool     RenderDeadAgents;
-        public bool     RenderMapBG;
+        public bool     RenderMapBg;
         public Color    BackgroundColor;
     }
 }

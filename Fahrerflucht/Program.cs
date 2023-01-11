@@ -56,6 +56,9 @@ namespace Fahrerflucht
                     Raylib.EndDrawing();
                 }
 
+                foreach (var window in windowStack)
+                    window.Shutdown();
+
                 rlImGui.Shutdown();
                 Raylib.CloseWindow();
             }
