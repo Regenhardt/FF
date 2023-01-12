@@ -6,7 +6,7 @@
     {
       "Name": "Team-Fahrerflucht",
       "Color": [ 40, 240, 40 ],
-      "StartPosition": [ 150, 40 ],
+      "StartPosition": [ 250, 125 ],
       "AgentCount": 50,
       "MinKeepThreshold": 20,
       "ThresholdFitness": 20,
@@ -40,6 +40,36 @@
         {
           "Angle": 10,
           "Range": 20
+        }
+      ]
+    },
+    {
+      "Name": "Team-CitySim",
+      "Color": [ 40, 40, 240 ],
+      "StartPosition": [ 150, 40 ],
+      "AgentCount": 120,
+      "MinKeepThreshold": 20,
+      "ThresholdFitness": 20,
+      "BestPerformerKeepRate": 0.1,
+      "RandomSeed": 6512378,
+      "HiddenLayerCount": 2,
+      "HiddenNeuronCount": 8,
+      "Sensors": [
+        {
+          "Angle": 10,
+          "Range": 25
+        },
+        {
+          "Angle": 45,
+          "Range": 15
+        },
+        {
+          "Angle": -10,
+          "Range": 25
+        },
+        {
+          "Angle": -45,
+          "Range": 15
         }
       ]
     }
