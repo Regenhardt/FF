@@ -108,8 +108,8 @@ namespace Fahrerflucht.UI.SimulationEditor
 
         // Simulation
         private readonly RunInstance _runInstance;
-        private Simulation.Simulation _curSimulation;
         private readonly AgentSettingsDTO _agentSettings;
+        private Simulation.Simulation _curSimulation;
 
         // Theme
         private bool _isDarkThemed;

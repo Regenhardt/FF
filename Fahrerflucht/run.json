@@ -4,7 +4,7 @@
   "CheckPointFile": "Resources/checkpoints1.json",
   "Groups": [
     {
-      "Name": "Devs-1",
+      "Name": "Team-Fahrerflucht",
       "Color": [ 40, 240, 40 ],
       "StartPosition": [ 150, 40 ],
       "AgentCount": 100,
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "Name": "Devs-2",
+      "Name": "Team-Snakes",
       "Color": [ 250, 40, 40 ],
       "StartPosition": [ 630, 40 ],
       "AgentCount": 100,
@@ -35,15 +35,11 @@
       "BestPerformerKeepRate": 0.1,
       "RandomSeed": 123515,
       "HiddenLayerCount": 1,
-      "HiddenNeuronCount": 2,
+      "HiddenNeuronCount": 1,
       "Sensors": [
         {
           "Angle": 10,
-          "Range": 10
-        },
-        {
-          "Angle": -10,
-          "Range": 10
+          "Range": 20
         }
       ]
     }

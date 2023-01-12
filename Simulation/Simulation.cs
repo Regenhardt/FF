@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Mars.Components.Starter;
@@ -72,7 +71,7 @@ namespace Simulation
             var description = new ModelDescription();
             description.AddLayer<GameLayer>();
             description.AddAgent<Player, GameLayer>();
-            var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 1000,\"console\": true,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
+            var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 10000,\"console\": true,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
             var starter = SimulationStarter.Start(description, config);
             starter.Run();
             starter.Dispose();
@@ -97,7 +96,7 @@ namespace Simulation
             var teamPath = basePath + gang.Name + "/";
             Directory.CreateDirectory(teamPath);
             {
-                using StreamWriter writer = new StreamWriter(teamPath + "/fitnessdata.csv");
+                using var writer = new StreamWriter(teamPath + "/fitnessdata.csv");
                 // Fitness Data
                 foreach (var fitness in gang.FitnessData)
                 {
@@ -109,13 +108,10 @@ namespace Simulation
                 int i = 0;
                 foreach (var genome in gang.BestGenomes)
                 {
-                    using StreamWriter genomeWriter = new StreamWriter(teamPath + "/genome"+ (i++) + ".json");
+                    using var genomeWriter = new StreamWriter(teamPath + "/genome"+ (i++) + ".json");
                     genomeWriter.Write(genome.ExportNeuralNetwork());
                 }
             }
-            // gang.FitnessData;
-            // gang.BestGenomes;
-
         }
 
         public List<List<int>> GetCheckPoints()
