@@ -89,15 +89,13 @@ namespace Fahrerflucht.UI.SimulationEditor
                         System.Console.WriteLine("Starting simulation");
                         _curSimulation = new Simulation.Simulation(_runInstance);
                         _curSimulation.StartDetached();
-                        _simPreview._curSimulation = _curSimulation;
+                        _simPreview.SetSimulation(_curSimulation);
                     }
                     else
                     {
                         System.Console.WriteLine("Simulation is already running!");
                     }
                 }
-
-                ImGui.Button("Start Team Game");
                 ImGui.TreePop();
             }
 

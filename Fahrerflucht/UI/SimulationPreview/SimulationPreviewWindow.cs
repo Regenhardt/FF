@@ -1,4 +1,5 @@
-﻿using Simulation;
+﻿using System.Linq;
+using Simulation;
 using Simulation.Model.Agent;
 using Fahrerflucht.UI.IMGUI;
 using ImGuiNET;
@@ -47,6 +48,11 @@ namespace Fahrerflucht.UI.SimulationPreview
             _agentSpawn = new Vector2(agentSettings.XSpawn, agentSettings.YSpawn);
         }
 
+        public void SetSimulation(Simulation.Simulation simulation)
+        {
+            _curSimulation = simulation;
+        }
+
         public override void Show(bool firstOpen)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
@@ -63,7 +69,7 @@ namespace Fahrerflucht.UI.SimulationPreview
                 Focused = ImGui.IsWindowFocused(ImGuiFocusedFlags.ChildWindows);
                 
 
-                Vector2 size = ImGui.GetContentRegionAvail();
+                var size = ImGui.GetContentRegionAvail();
                
                 if (_lastSize.X != size.X || _lastSize.Y != size.Y)
                 {
@@ -74,7 +80,7 @@ namespace Fahrerflucht.UI.SimulationPreview
                 }
 
                 // draw the view
-                Rectangle viewRect = new Rectangle(_viewTexture.texture.width, _viewTexture.texture.height, size.X, -size.Y);
+                var viewRect = new Rectangle(_viewTexture.texture.width, _viewTexture.texture.height, size.X, -size.Y);
                 rlImGui.ImageRect(_viewTexture.texture, (int)size.X, (int)size.Y, viewRect);
                 Update();
                 ImGui.End();
@@ -93,22 +99,12 @@ namespace Fahrerflucht.UI.SimulationPreview
             {
                 foreach (var feature in _runInstance.Track.Features)
                 {
-                    foreach (var geoary in feature.Geometry.Coordinates)
+                    foreach (var geoAry in feature.Geometry.Coordinates)
                     {
-                        bool firstIter = true;
-                        Vector2 startVector = new Vector2(0, 0);
-                        foreach (var geo in geoary)
+                        var startVector = new Vector2(geoAry.First()[0], geoAry.First()[1]);
+                        foreach (var endVector in geoAry.Skip(1).Select(geo => new Vector2(geo[0], geo[1])))
                         {
-                            Vector2 endVector = new Vector2(geo[0], geo[1]);
-                            if (!firstIter)
-                            {
-                                Raylib.DrawLineEx(startVector, endVector, 5, ThemeConstants.TrackOutline);
-                            }
-                            else
-                            {
-                                firstIter = false;
-                            }
-
+                            Raylib.DrawLineEx(startVector, endVector, 3, ThemeConstants.TrackOutline);
                             startVector = endVector;
                         }
                     }
@@ -119,7 +115,7 @@ namespace Fahrerflucht.UI.SimulationPreview
             {
                 foreach (var cp in _runInstance.CheckPoints)
                 {
-                    Raylib.DrawCircle(cp[0], cp[1], 5, ThemeConstants.CheckPoint);
+                    Raylib.DrawCircle(cp[0], cp[1], 3, ThemeConstants.CheckPoint);
                 }
             }
         }
@@ -128,7 +124,7 @@ namespace Fahrerflucht.UI.SimulationPreview
         {
             if (_settings.RenderCarImages)
             {
-                Rectangle rec = new Rectangle(agentDTO.Position.X, agentDTO.Position.Y, _carTextureRect.width, _carTextureRect.height);
+                var rec = new Rectangle(agentDTO.Position.X, agentDTO.Position.Y, _carTextureRect.width, _carTextureRect.height);
                 Raylib.DrawTexturePro(_carTexture, _carTextureRect, rec, new Vector2(_carTextureRect.width/2, _carTextureRect.height/2), MathUtils.GetAngle(agentDTO.MovingVec, 1, 0), agentDTO.Color);
             }
 
@@ -136,9 +132,9 @@ namespace Fahrerflucht.UI.SimulationPreview
 
             if (_settings.RenderSensors)
             {
-                foreach (SensorDataDTO sensor in agentDTO.SensorData)
+                foreach (var sensor in agentDTO.SensorData)
                 {
-                    Vector2 sensorPos = agentDTO.Position + sensor.SensorVec;
+                    var sensorPos = agentDTO.Position + sensor.SensorVec;
                     Raylib.DrawCircle((int)sensorPos.X, (int)sensorPos.Y, 2, ThemeConstants.Sensor);
                     Raylib.DrawLine((int)agentDTO.Position.X, (int)agentDTO.Position.Y, (int)sensorPos.X, (int)sensorPos.Y, new Color(ThemeConstants.Sensor.r, ThemeConstants.Sensor.g, ThemeConstants.Sensor.b, (int)(sensor.LastSensorRead * ThemeConstants.Sensor.a)));
                 }
@@ -171,10 +167,9 @@ namespace Fahrerflucht.UI.SimulationPreview
 
                 if (_curSimulation != null && _curSimulation.AgentsReady())
                 {
-                    foreach (var snapshot in _curSimulation.GetAgentSnapshots())
+                    foreach (var snapshot in _curSimulation.GetAgentSnapshots().Where(snapshot => snapshot.IsAlive || _settings.RenderDeadAgents))
                     {
-                        if (snapshot.IsAlive || _settings.RenderDeadAgents)
-                            RenderAgent(snapshot);
+                        RenderAgent(snapshot);
                     }
                 }
                 else
@@ -192,14 +187,14 @@ namespace Fahrerflucht.UI.SimulationPreview
         private SimulationVpDto _settings;
 
         // Render textures
-        private Texture2D _carTexture;
-        private Rectangle _carTextureRect;
-        private Texture2D _trackTexture;
+        private readonly Texture2D _carTexture;
+        private readonly Rectangle _carTextureRect;
+        private readonly Texture2D _trackTexture;
 
         // Simulation context
-        public Simulation.Simulation _curSimulation;
+        private Simulation.Simulation _curSimulation;
         private Vector2 _lastSize;
         private Vector2 _agentSpawn;
-        private RunInstance _runInstance;
+        private readonly RunInstance _runInstance;
     }
 }
