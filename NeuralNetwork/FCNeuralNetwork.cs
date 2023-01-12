@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace NeuralNetwork
@@ -115,6 +116,7 @@ namespace NeuralNetwork
         /// <summary>
         /// An optional name attribute to make it easier to debug and prettier for export and import.
         /// </summary>
+        [IgnoreDataMember]
         public string Name;
         /// <summary>
         /// The input layer of the neural network.

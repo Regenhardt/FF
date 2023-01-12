@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace NeuralNetwork
 {
@@ -37,6 +38,7 @@ namespace NeuralNetwork
         /// <summary>
         /// An optional name attribute to make it easier to debug and prettier for export and import (e.g. InputLayer, OutputLayer, Hidden-N-Layer,...).
         /// </summary>
+        [IgnoreDataMember]
         public string Name;
         /// <summary>
         /// The <see cref="Neuron" />s which reside in the layer and are addressed by their index. 
