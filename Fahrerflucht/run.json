@@ -7,7 +7,7 @@
       "Name": "Team-Fahrerflucht",
       "Color": [ 40, 240, 40 ],
       "StartPosition": [ 150, 40 ],
-      "AgentCount": 100,
+      "AgentCount": 50,
       "MinKeepThreshold": 20,
       "ThresholdFitness": 20,
       "BestPerformerKeepRate": 0.1,

@@ -71,7 +71,7 @@ namespace Simulation
             var description = new ModelDescription();
             description.AddLayer<GameLayer>();
             description.AddAgent<Player, GameLayer>();
-            var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 10000,\"console\": true,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
+            var config = SimulationConfig.Deserialize("{\"globals\": {\"steps\": 20000,\"console\": true,\"options\": {\"delimiter\": \";\",\"format\": \"en-EN\"}},\"layers\": [{\"name\": \"GameLayer\"}],\"agents\": [{\"name\":\"Player\",\"count\": " + _gangScheduler.GetAgentCount() + "}]}");
             var starter = SimulationStarter.Start(description, config);
             starter.Run();
             starter.Dispose();

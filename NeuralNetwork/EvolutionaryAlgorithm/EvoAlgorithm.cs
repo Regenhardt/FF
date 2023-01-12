@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Utils;
 
@@ -60,11 +61,15 @@ namespace NeuralNetwork.EvolutionaryAlgorithm
                 newGenomes.Add(sortedGenomes[i]);
 
             // Get random genome pairs (to fill up the gene pool again) and breed them
-            foreach (var parents in RandomUtils.GetRandomUniquePairs((_genomes.Count - newGenomes.Count) / 2, breedingParticipants, _random))
+            foreach (var parents in RandomUtils.GetRandomUniquePairs(((_genomes.Count - newGenomes.Count) + 1) / 2, breedingParticipants, _random))
             {
                 newGenomes.Add(new Genome(sortedGenomes[parents[0]]).RandomlyInheritGenes(sortedGenomes[parents[1]], _random).MutateRandomly(_random));
                 newGenomes.Add(new Genome(sortedGenomes[parents[1]]).RandomlyInheritGenes(sortedGenomes[parents[0]], _random).MutateRandomly(_random));
             }
+
+            if (_genomes.Count != newGenomes.Count)
+                newGenomes.RemoveRange(_genomes.Count, newGenomes.Count - _genomes.Count);
+
 
             _genomes = newGenomes;
         }
