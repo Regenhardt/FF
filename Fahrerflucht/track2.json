@@ -1,12 +1,12 @@
 {
-  "MapFile": "Resources/track1.geojson",
-  "MapBG": "Resources/track1.png",
-  "CheckPointFile": "Resources/checkpoints1.json",
+  "MapFile": "Resources/track2.geojson",
+  "MapBG": "Resources/track2.png",
+  "CheckPointFile": "Resources/checkpoints2.json",
   "Groups": [
     {
       "Name": "Team-Fahrerflucht",
       "Color": [ 40, 240, 40 ],
-      "StartPosition": [ 250, 125 ],
+      "StartPosition": [ 360, 155 ],
       "AgentCount": 50,
       "MinKeepThreshold": 20,
       "ThresholdFitness": 20,
@@ -28,7 +28,7 @@
     {
       "Name": "Team-Snakes",
       "Color": [ 250, 40, 40 ],
-      "StartPosition": [ 630, 40 ],
+      "StartPosition": [ 360, 155 ],
       "AgentCount": 100,
       "MinKeepThreshold": 20,
       "ThresholdFitness": 20,
@@ -46,7 +46,7 @@
     {
       "Name": "Team-CitySim",
       "Color": [ 40, 40, 240 ],
-      "StartPosition": [ 150, 40 ],
+      "StartPosition": [ 360, 155 ],
       "AgentCount": 120,
       "MinKeepThreshold": 20,
       "ThresholdFitness": 20,
